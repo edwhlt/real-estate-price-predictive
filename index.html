@@ -12,19 +12,33 @@
             const autocomplete = new google.maps.places.Autocomplete(input);
         }
     </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            width: 50%;
+        }
+    </style>
 </head>
 <body onload="initAutocomplete()">
     <h1>Enter Property Details</h1>
     <form id="predictionForm">
         <label for="surface_reelle_bati">Surface Réelle Bâti (m²):</label>
-        <input type="text" id="surface_reelle_bati" name="surface_reelle_bati"><br><br>
+        <input type="number" id="surface_reelle_bati" name="surface_reelle_bati" step="0.01" value="24.0"><br><br>
         <label for="type_local">Type Local:</label>
         <select id="type_local" name="type_local">
             <option value="Maison">Maison</option>
             <option value="Appartement">Appartement</option>
         </select><br><br>
         <label for="adresse">Adresse:</label>
-        <input type="text" id="adresse" name="adresse"><br><br>
+        <input type="text" id="adresse" name="adresse" value="3 rue du pdt franklin roosevelt, Bourg-La-Reine"><br><br>
         <input type="submit" value="Predict">
     </form>
     <h1>Kafka Messages</h1>

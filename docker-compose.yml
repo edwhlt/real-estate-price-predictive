@@ -28,7 +28,7 @@ services:
       - spark-network
 
   spark-notebook:
-    image: jupyter/all-spark-notebook:latest
+    build: spark
     container_name: spark-notebook
     ports:
       - "4040:4040"
