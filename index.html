@@ -5,8 +5,15 @@
     <title>Real Estate Price Prediction</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5edf5dvJKCXqbNVtBmyKviVZvfaHRRDY&libraries=places"></script>
+    <script>
+        function initAutocomplete() {
+            const input = document.getElementById('address');
+            const autocomplete = new google.maps.places.Autocomplete(input);
+        }
+    </script>
 </head>
-<body>
+<body onload="initAutocomplete()">
     <h1>Enter Property Details</h1>
     <form id="predictionForm">
         <label for="surface_reelle_bati">Surface Réelle Bâti (m²):</label>

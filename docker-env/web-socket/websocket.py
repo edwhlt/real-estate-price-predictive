@@ -49,7 +49,6 @@ async def consume_messages(websocket):
         except Exception as e:
             logging.error(f"Exception in consume_messages: {e}")
             break
-    logging.info("Exiting consume_messages")
 
 
 async def handler(websocket, path):
@@ -66,7 +65,6 @@ async def handler(websocket, path):
             await produce_message(message)
     finally:
         consumer_task.cancel()
-        consumer.close()
         logging.info(f"WebSocket connection closed for {websocket.remote_address}")
 
 
