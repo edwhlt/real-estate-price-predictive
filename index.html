@@ -1,0 +1,60 @@
+<!-- web-app/templates/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real Estate Price Prediction</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <h1>Enter Property Details</h1>
+    <form id="predictionForm">
+        <label for="surface_reelle_bati">Surface Réelle Bâti (m²):</label>
+        <input type="text" id="surface_reelle_bati" name="surface_reelle_bati"><br><br>
+        <label for="type_local">Type Local:</label>
+        <select id="type_local" name="type_local">
+            <option value="Maison">Maison</option>
+            <option value="Appartement">Appartement</option>
+        </select><br><br>
+        <label for="adresse">Adresse:</label>
+        <input type="text" id="adresse" name="adresse"><br><br>
+        <input type="submit" value="Predict">
+    </form>
+    <h1>Kafka Messages</h1>
+    <ul id="messages"></ul>
+
+    <script>
+        const ws = new WebSocket('ws://localhost:6789');
+
+        ws.onmessage = function(event) {
+            const message = JSON.parse(event.data);
+            const li = document.createElement('li');
+            li.textContent = `Prediction: ${parseFloat(message.prediction).toFixed(2)} €`;
+            document.getElementById('messages').appendChild(li);
+        };
+
+        ws.onopen = function() {
+            console.log('WebSocket connection established');
+        };
+
+        ws.onclose = function() {
+            console.log('WebSocket connection closed');
+        };
+
+        document.getElementById('predictionForm').onsubmit = function(event) {
+            event.preventDefault();
+            const surface_reelle_bati = document.getElementById('surface_reelle_bati').value;
+            const type_local = document.getElementById('type_local').value;
+            const adresse = document.getElementById('adresse').value;
+
+            const data = {
+                surface_reelle_bati: parseFloat(surface_reelle_bati),
+                type_local: type_local,
+                adresse: adresse
+            };
+
+            ws.send(JSON.stringify(data));
+        };
+    </script>
+</body>
+</html>
